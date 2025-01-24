@@ -12,6 +12,25 @@ function Users() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/userdelete/${id}`
+      );
+
+      if (response.data) {
+        // If the document was deleted successfully
+        console.log("User deleted:", response.data);
+        window.location.reload();
+      } else {
+        // If no document was found (response.data is null)
+        console.log("Invalid ID Number");
+      }
+    } catch (err) {
+      console.error("Error while deleting user:", err);
+    }
+  };
+
   return (
     <>
       <div className="d-flex vw-100 vh-100 bg-primary justify-content-center align-items-center">
@@ -42,7 +61,12 @@ function Users() {
                       >
                         Update
                       </Link>
-                      <button className="btn btn-danger">Delete</button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={(e) => handDelete(user._id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );

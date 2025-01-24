@@ -36,16 +36,6 @@ app.get("/getuser/:id", async (req, res) => {
   }
 });
 
-// app.put("/updateuser/:id", (req, res) => {
-//   const id = req.params.id;
-//   UserModel.findByIdAndUpdate(
-//     { _id: id },
-//     { name: req.body.name, email: req.body.email, age: req.body.age }
-//   )
-//     .then((user) => res.json(user))
-//     .catch((err) => res.json(err));
-// });
-
 app.put("/updateuser/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -63,6 +53,13 @@ app.put("/updateuser/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Error updating user", error: err });
   }
+});
+
+app.delete("/userdelete/:id", (req, res) => {
+  const id = req.params.id;
+  UserModel.findByIdAndDelete({ _id: id })
+    .then((result) => res.json(result))
+    .catch((err) => res.json(err));
 });
 
 app.listen(3001, () => {
